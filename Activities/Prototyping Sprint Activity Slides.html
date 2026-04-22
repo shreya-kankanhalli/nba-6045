@@ -7,22 +7,36 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
       background: #111;
-      color: #1a1a1a;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    #deck {
+      width: 960px;
+      height: 540px;
+      position: relative;
     }
 
     .slide {
+      position: absolute;
+      top: 0; left: 0;
       width: 960px;
       height: 540px;
-      margin: 32px auto;
       background: white;
-      display: flex;
+      display: none;
       flex-direction: column;
       padding: 48px 60px 40px;
-      position: relative;
       overflow: hidden;
+      color: #1a1a1a;
     }
+
+    .slide.active { display: flex; }
 
     .slide::before {
       content: '';
@@ -32,6 +46,20 @@
       background: #B31B1B;
     }
 
+    /* Nav counter */
+    #counter {
+      position: fixed;
+      bottom: 18px;
+      right: 24px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.08em;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    /* ── Typography ── */
     .slide-label {
       font-size: 10.5px;
       letter-spacing: 0.13em;
@@ -39,20 +67,17 @@
       color: #999;
       margin-bottom: 10px;
     }
-
     h1 {
       font-size: 28px;
       font-weight: 700;
       line-height: 1.2;
       margin-bottom: 6px;
     }
-
     .subtitle {
       font-size: 14px;
       color: #666;
       margin-bottom: 28px;
     }
-
     .footnote {
       margin-top: auto;
       font-size: 10.5px;
@@ -60,23 +85,9 @@
       border-top: 1px solid #eee;
       padding-top: 9px;
     }
-
     .red { color: #B31B1B; }
     .two-col { display: flex; gap: 40px; flex: 1; }
     .col { flex: 1; }
-
-    /* Print separator between presentation and concept handouts */
-    .print-separator {
-      width: 960px;
-      margin: 40px auto 8px;
-      border-top: 2px dashed #555;
-      padding-top: 14px;
-      color: #aaa;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
 
     /* ══ SLIDE 1: TITLE ══ */
     .title-eyebrow {
@@ -104,10 +115,7 @@
       display: flex;
       gap: 40px;
     }
-    .title-meta-item {
-      font-size: 12px;
-      color: #999;
-    }
+    .title-meta-item { font-size: 12px; color: #999; }
     .title-meta-item span {
       display: block;
       font-size: 14px;
@@ -140,23 +148,9 @@
       color: #B31B1B;
       margin-bottom: 6px;
     }
-    .phase-title {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .phase-desc {
-      font-size: 12px;
-      color: #555;
-      line-height: 1.55;
-      flex: 1;
-    }
-    .phase-time {
-      margin-top: 12px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #999;
-    }
+    .phase-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+    .phase-desc { font-size: 12px; color: #555; line-height: 1.55; flex: 1; }
+    .phase-time { margin-top: 12px; font-size: 11px; font-weight: 700; color: #999; }
     .phase-time.red { color: #B31B1B; }
 
     /* ══ SLIDE 3: PAIN POINTS ══ */
@@ -165,17 +159,8 @@
       padding: 10px 0 10px 18px;
       margin-bottom: 16px;
     }
-    .quote-text {
-      font-size: 13.5px;
-      line-height: 1.55;
-      color: #1a1a1a;
-      font-style: italic;
-    }
-    .quote-workaround {
-      font-size: 11.5px;
-      color: #888;
-      margin-top: 5px;
-    }
+    .quote-text { font-size: 13.5px; line-height: 1.55; color: #1a1a1a; font-style: italic; }
+    .quote-workaround { font-size: 11.5px; color: #888; margin-top: 5px; }
     .quote-workaround strong { color: #555; font-style: normal; }
 
     /* ══ SLIDE 4: PRE-PROMPT QUESTIONS ══ */
@@ -186,11 +171,7 @@
       flex: 1;
       justify-content: center;
     }
-    .question-item {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-    }
+    .question-item { display: flex; gap: 20px; align-items: flex-start; }
     .q-num {
       font-size: 30px;
       font-weight: 800;
@@ -198,19 +179,8 @@
       line-height: 1;
       min-width: 26px;
     }
-    .q-text {
-      font-size: 15px;
-      font-weight: 600;
-      line-height: 1.4;
-      padding-top: 5px;
-    }
-    .q-sub {
-      font-size: 12px;
-      color: #777;
-      font-weight: 400;
-      margin-top: 3px;
-      line-height: 1.5;
-    }
+    .q-text { font-size: 15px; font-weight: 600; line-height: 1.4; padding-top: 5px; }
+    .q-sub { font-size: 12px; color: #777; font-weight: 400; margin-top: 3px; line-height: 1.5; }
     .instruction-note {
       background: #f7f7f7;
       border-left: 3px solid #1a1a1a;
@@ -253,20 +223,10 @@
     }
 
     /* ══ SLIDE 6: TESTING PROTOCOL ══ */
-    .role-col {
-      flex: 1;
-      padding: 18px;
-      border-radius: 6px;
-    }
+    .role-col { flex: 1; padding: 18px; border-radius: 6px; }
     .role-col.tester { background: #f4f4f4; }
     .role-col.builder { background: #fff8f8; border: 1.5px solid #f0d0d0; }
-    .role-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
+    .role-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 10px; }
     .role-label.red { color: #B31B1B; }
     .role-label.gray { color: #666; }
     .role-col ul { list-style: none; padding: 0; }
@@ -281,12 +241,7 @@
     .role-col ul li::before { content: '► '; color: #B31B1B; font-size: 9px; }
 
     /* ══ SLIDE 7: ITERATION ══ */
-    .iter-steps {
-      display: flex;
-      gap: 14px;
-      flex: 1;
-      align-items: center;
-    }
+    .iter-steps { display: flex; gap: 14px; flex: 1; align-items: center; }
     .iter-step {
       flex: 1;
       text-align: center;
@@ -294,14 +249,7 @@
       background: #f7f7f7;
       border-radius: 6px;
     }
-    .iter-step-num {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #B31B1B;
-      margin-bottom: 8px;
-    }
+    .iter-step-num { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #B31B1B; margin-bottom: 8px; }
     .iter-step-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
     .iter-step-desc { font-size: 12px; color: #666; line-height: 1.5; }
     .iter-arrow { font-size: 20px; color: #ccc; }
@@ -317,13 +265,7 @@
     }
 
     /* ══ SLIDE 8: DEBRIEF ══ */
-    .debrief-q {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      padding: 13px 0;
-      border-bottom: 1px solid #eee;
-    }
+    .debrief-q { display: flex; gap: 14px; align-items: flex-start; padding: 13px 0; border-bottom: 1px solid #eee; }
     .debrief-q:last-child { border-bottom: none; }
     .debrief-q-num {
       font-size: 11px;
@@ -355,24 +297,15 @@
       margin-bottom: 16px;
     }
     .concept-section { margin-bottom: 18px; }
-    .concept-section-label {
-      font-size: 9.5px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #B31B1B;
-      margin-bottom: 4px;
-    }
+    .concept-section-label { font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #B31B1B; margin-bottom: 4px; }
     .concept-section-text { font-size: 13.5px; line-height: 1.55; color: #1a1a1a; }
-    .concept-idea-box {
-      background: #f7f7f7;
-      border-radius: 5px;
-      padding: 16px 18px;
-    }
+    .concept-idea-box { background: #f7f7f7; border-radius: 5px; padding: 16px 18px; }
     .concept-idea-box p { font-size: 13.5px; line-height: 1.6; color: #333; }
   </style>
 </head>
 <body>
+
+<div id="deck">
 
   <!-- ══ SLIDE 1: TITLE ══ -->
   <div class="slide">
@@ -426,17 +359,14 @@
     <div class="slide-label">Anonymous submissions from this class · Apr 21, 2026</div>
     <h1>Student Pain Points</h1>
     <div class="subtitle">Today's activity is built on what you submitted. A selection is shown below.</div>
-
     <div class="quote-block">
       <div class="quote-text">I waited a long time for my lunch. The line in Sage Atrium cafe was long and I was in a rush.</div>
       <div class="quote-workaround"><strong>Workaround tried:</strong> Going to another cafeteria, but no way to know which location would be faster.</div>
     </div>
-
     <div class="quote-block">
       <div class="quote-text">I had to fill out a background check rent application through an online portal. It asked me to upload my W-2, tax forms from the past two years, my license, proof of employment, and detailed bank statements. It was really inconvenient and tedious, and invasive.</div>
       <div class="quote-workaround"><strong>Workaround tried:</strong> None identified. "Rent vetting is complicated because you are trying to verify an individual's credibility."</div>
     </div>
-
     <div class="quote-block">
       <div class="quote-text">Lack of Uber availability in this town — trying to get from my house to downtown. I've even considered writing Uber an email.</div>
       <div class="quote-workaround"><strong>Workaround tried:</strong> Avoiding car ownership, but no reliable alternative exists locally.</div>
@@ -448,7 +378,6 @@
     <div class="slide-label">Phase 1 · Before opening Lovable</div>
     <h1>Three Diagnostic Questions</h1>
     <div class="subtitle">Answer all three in writing before your team opens Lovable.</div>
-
     <div class="question-list">
       <div class="question-item">
         <div class="q-num">1</div>
@@ -472,7 +401,6 @@
         </div>
       </div>
     </div>
-
     <div class="instruction-note">
       Teams that skip this step tend to build more than they need and learn less. Write the answers down before you prompt Lovable.
     </div>
@@ -483,7 +411,6 @@
     <div class="slide-label">Phase 1 · Writing your Lovable prompt</div>
     <h1>Prompt Structure and App Requirements</h1>
     <div class="subtitle">Use this template as a starting point. Be explicit about what to leave out.</div>
-
     <div class="prompt-box">
       "Build a <span class="fill">[mobile / web]</span> app for <span class="fill">[user]</span> who <span class="fill">[pain point, one sentence]</span>.<br>
       The app must allow users to <span class="fill">[core action]</span>.<br>
@@ -491,7 +418,6 @@
       Do not include <span class="fill">[features you are deliberately leaving out — name them]</span>.<br>
       Design should feel <span class="fill">[tone or style, e.g., clean, mobile-first, minimal]</span>."
     </div>
-
     <div class="guidance-row">
       <div class="guidance-item">
         <strong>Your app should include</strong>
@@ -513,7 +439,6 @@
     <div class="slide-label">Phase 2 · User testing</div>
     <h1>Testing Protocol</h1>
     <div class="subtitle">Each A team tests a B team's prototype. Each B team tests an A team's prototype. Two distinct roles during the session.</div>
-
     <div class="two-col" style="gap: 22px;">
       <div class="role-col tester">
         <div class="role-label gray">The Tester</div>
@@ -534,7 +459,6 @@
         </ul>
       </div>
     </div>
-
     <div class="footnote">The urge to explain your product while someone is struggling to use it is a signal that the design has a problem, not that the user does.</div>
   </div>
 
@@ -543,7 +467,6 @@
     <div class="slide-label">Phase 3 · Iteration</div>
     <h1>One Iteration: Identify, Decide, Build</h1>
     <div class="subtitle">Based on what you observed in Phase 2, make one targeted change to your prototype.</div>
-
     <div class="iter-steps">
       <div class="iter-step">
         <div class="iter-step-num">Step 1</div>
@@ -563,7 +486,6 @@
         <div class="iter-step-desc">Describe the specific change. Specify what to keep unchanged. Be precise so Lovable does not rebuild the whole app.</div>
       </div>
     </div>
-
     <div class="iter-note">
       You will want to fix several things. Choosing one and defending that choice is how product prioritization works in practice. Be ready to explain why this change over the others.
     </div>
@@ -574,40 +496,28 @@
     <div class="slide-label">Debrief · 6 minutes</div>
     <h1>Discussion Questions</h1>
     <div class="subtitle">One 60-second demo per concept (show the iteration, not just the MVP), then three questions for the room.</div>
-
     <div style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
       <div class="debrief-q">
         <div class="debrief-q-num">1</div>
-        <div>
-          <div class="debrief-q-text">What was your riskiest assumption going in, and did user testing support or challenge it?</div>
-        </div>
+        <div><div class="debrief-q-text">What was your riskiest assumption going in, and did user testing support or challenge it?</div></div>
       </div>
       <div class="debrief-q">
         <div class="debrief-q-num">2</div>
-        <div>
-          <div class="debrief-q-text">What change did you make in Phase 3, and why that change over the others you could have made?</div>
-        </div>
+        <div><div class="debrief-q-text">What change did you make in Phase 3, and why that change over the others you could have made?</div></div>
       </div>
       <div class="debrief-q">
         <div class="debrief-q-num">3</div>
-        <div>
-          <div class="debrief-q-text">You completed one Build-Measure-Learn cycle in under an hour. What would you do differently at the start of the next one?</div>
-        </div>
+        <div><div class="debrief-q-text">You completed one Build-Measure-Learn cycle in under an hour. What would you do differently at the start of the next one?</div></div>
       </div>
     </div>
-
     <div class="footnote">Connection to Sprint 3: your PRD requires a vibe-coded prototype with a deployed link. The decisions you made today — what to leave out, what to prioritize after feedback — are the same decisions that separate a useful prototype from an over-built one.</div>
   </div>
 
-  <!-- ══ PRINT SEPARATOR ══ -->
-  <div class="print-separator">Print separately and distribute by group — students should not see the other group's concept card before Phase 2</div>
-
-  <!-- ══ CONCEPT CARD A (distribute to Group A only) ══ -->
+  <!-- ══ CONCEPT CARD A (handout — not projected) ══ -->
   <div class="slide">
     <div class="slide-label">Phase 1 · Concept assignment</div>
     <div class="concept-tag">Group A</div>
     <h1>Campus Food Finder</h1>
-
     <div class="two-col" style="margin-top: 10px;">
       <div class="col">
         <div class="concept-section">
@@ -630,12 +540,11 @@
     </div>
   </div>
 
-  <!-- ══ CONCEPT CARD B (distribute to Group B only) ══ -->
+  <!-- ══ CONCEPT CARD B (handout — not projected) ══ -->
   <div class="slide">
     <div class="slide-label">Phase 1 · Concept assignment</div>
     <div class="concept-tag">Group B</div>
     <h1>Renter Credential Profile</h1>
-
     <div class="two-col" style="margin-top: 10px;">
       <div class="col">
         <div class="concept-section">
@@ -658,5 +567,41 @@
     </div>
   </div>
 
+</div>
+
+<div id="counter"></div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  // Scale to fill viewport maintaining 960x540
+  function resize() {
+    const scale = Math.min(window.innerWidth / 960, window.innerHeight / 540);
+    document.getElementById('deck').style.transform = 'scale(' + scale + ')';
+    document.getElementById('deck').style.transformOrigin = 'center center';
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); show(current - 1); }
+  });
+
+  // Click to advance
+  document.addEventListener('click', function() { show(current + 1); });
+
+  show(0);
+</script>
 </body>
 </html>
