@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 7 Class 1 — B2B GTM · NBA 6045</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #111;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    #deck {
+      width: 960px;
+      height: 540px;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0; left: 0;
+      width: 960px;
+      height: 540px;
+      background: white;
+      display: none;
+      flex-direction: column;
+      padding: 48px 60px 40px;
+      overflow: hidden;
+      color: #1a1a1a;
+    }
+
+    .slide.active { display: flex; }
+
+    .slide::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 6px;
+      background: #B31B1B;
+    }
+
+    #counter {
+      position: fixed;
+      bottom: 18px;
+      right: 24px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.08em;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .slide-label {
+      font-size: 10.5px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 28px;
+    }
+
+    .footnote {
+      margin-top: auto;
+      font-size: 10px;
+      color: #bbb;
+      border-top: 1px solid #eee;
+      padding-top: 8px;
+      line-height: 1.5;
+    }
+
+    .two-col { display: flex; gap: 40px; flex: 1; }
+    .col { flex: 1; display: flex; flex-direction: column; }
+
+    /* ══ SLIDE 1: B2B MARKET SCALE ══ */
+
+    .market-body {
+      display: flex;
+      gap: 0;
+      flex: 1;
+      margin-top: 4px;
+    }
+
+    .market-left {
+      flex: 1.1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-right: 36px;
+      border-right: 1px solid #eee;
+    }
+
+    .market-comparison {
+      display: flex;
+      gap: 24px;
+      align-items: flex-end;
+      margin-bottom: 18px;
+    }
+
+    .market-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .market-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 4px;
+    }
+
+    .market-value {
+      font-size: 44px;
+      font-weight: 800;
+      line-height: 1;
+      color: #B31B1B;
+    }
+
+    .market-value.muted {
+      color: #ccc;
+      font-size: 32px;
+    }
+
+    .market-sub {
+      font-size: 11px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .market-divider {
+      font-size: 28px;
+      color: #ddd;
+      padding-bottom: 8px;
+      align-self: flex-end;
+    }
+
+    .market-caption {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.55;
+      border-left: 3px solid #B31B1B;
+      padding-left: 12px;
+    }
+
+    .market-right {
+      flex: 1;
+      padding-left: 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .stat-block {
+      padding: 14px 16px;
+      background: #f7f7f7;
+      border-radius: 5px;
+    }
+
+    .stat-number {
+      font-size: 26px;
+      font-weight: 800;
+      color: #1a1a1a;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-desc {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .stat-source {
+      font-size: 10px;
+      color: #aaa;
+      margin-top: 3px;
+    }
+
+    /* ══ SLIDE 2: SPEAKER BIO ══ */
+
+    .speaker-body {
+      display: flex;
+      gap: 40px;
+      flex: 1;
+      margin-top: 4px;
+    }
+
+    .speaker-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .speaker-photo {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+
+    .speaker-name {
+      font-size: 32px;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .role-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .role-item-title {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #B31B1B;
+      line-height: 1.3;
+    }
+
+    .role-item-company {
+      font-size: 11.5px;
+      color: #888;
+    }
+
+    .speaker-bio {
+      font-size: 12px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .speaker-quote {
+      border-left: 3px solid #B31B1B;
+      padding: 8px 0 8px 14px;
+      font-size: 12px;
+      color: #666;
+      font-style: italic;
+      line-height: 1.55;
+    }
+
+    .speaker-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .credential-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 14px;
+      background: #f7f7f7;
+      border-radius: 5px;
+    }
+
+    .credential-icon {
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .credential-text {
+      font-size: 12px;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .credential-text strong {
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+  </style>
+</head>
+<body>
+<div id="deck">
+
+  <!-- ══ SLIDE 1: WHY B2B GTM ══ -->
+  <div class="slide">
+    <div class="slide-label">Week 7 · Go-to-Market Strategy</div>
+    <h1>B2B Markets: Scale and Purchase Complexity</h1>
+
+    <div class="market-body">
+      <div class="market-left">
+        <div class="market-comparison">
+          <div class="market-item">
+            <div class="market-label">B2B e-commerce</div>
+            <div class="market-value">$14.9T</div>
+            <div class="market-sub">global, 2023</div>
+          </div>
+          <div class="market-divider">vs.</div>
+          <div class="market-item">
+            <div class="market-label">B2C e-commerce</div>
+            <div class="market-value muted">$6.3T</div>
+            <div class="market-sub">global, 2023</div>
+          </div>
+        </div>
+        <div class="market-caption">
+          Statista / Capital One Shopping Research (2024)
+        </div>
+      </div>
+
+      <div class="market-right">
+        <div class="stat-block">
+          <div class="stat-number">6–10</div>
+          <div class="stat-desc">stakeholders in the average B2B purchase decision</div>
+          <div class="stat-source">Gartner, "The B2B Buying Journey" (2024)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 2: GUEST SPEAKER ══ -->
+  <div class="slide">
+    <div class="slide-label">Week 7 · Guest Speaker</div>
+    <h1>Today's Speaker</h1>
+
+    <div class="speaker-body">
+      <div class="speaker-left">
+        <img class="speaker-photo" src="../Activities/1733577966406.jpeg" alt="Samantha Thompson">
+        <div class="speaker-name">Samantha Thompson</div>
+        <div class="role-list">
+          <div>
+            <div class="role-item-title">Director, Global Sales Enablement</div>
+            <div class="role-item-company">Axonius</div>
+          </div>
+          <div>
+            <div class="role-item-title">Founder</div>
+            <div class="role-item-company">the enblr</div>
+          </div>
+        </div>
+        <div class="speaker-bio">
+          Samantha has spent nearly a decade building sales enablement functions at B2B SaaS companies from Series A through IPO. She was the founding hire in revenue enablement at Pulumi and held senior roles at HashiCorp through its 2021 IPO, supporting global sales teams across the Americas, Europe, and Asia.
+        </div>
+      </div>
+
+      <div class="speaker-right">
+        <div class="credential-row">
+          <div class="credential-icon">🏢</div>
+          <div class="credential-text"><strong>Companies:</strong> Axonius, Pulumi, HashiCorp (IPO 2021), Medallia, Mendix, Workable — all B2B SaaS</div>
+        </div>
+        <div class="credential-row">
+          <div class="credential-icon">🌐</div>
+          <div class="credential-text"><strong>Scale:</strong> Programs supporting 200+ sales professionals, solution engineers, and customer success teams globally</div>
+        </div>
+        <div class="credential-row">
+          <div class="credential-icon">🏆</div>
+          <div class="credential-text"><strong>Recognition:</strong> HashiCorp President's Club (2022, 2024); Pulumi Rookie of the Year; Sales Enablement Collective "One to Watch" (2025)</div>
+        </div>
+        <div class="credential-row">
+          <div class="credential-icon">🎤</div>
+          <div class="credential-text"><strong>Speaking:</strong> Sales Enablement Collective Boston (2024); Sales Enablement Society Experience (2022); Sales Enablement Summit Festival (2023)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="counter"></div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  function resize() {
+    const scale = Math.min(window.innerWidth / 960, window.innerHeight / 540);
+    document.getElementById('deck').style.transform = 'scale(' + scale + ')';
+    document.getElementById('deck').style.transformOrigin = 'center center';
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); show(current - 1); }
+  });
+
+  document.addEventListener('click', function() { show(current + 1); });
+
+  show(0);
+</script>
+</body>
+</html>
